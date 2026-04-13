@@ -9,13 +9,14 @@
 <style>
 :root{--cream:#F8F4EE;--dark:#1A1815;--warm:#8B6840;--green:#3A5C38;--gl:#E6EFE5;--acc:#C49060;--bdr:rgba(139,104,64,.15);--w:#fff}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);font-weight:300;overflow-x:hidden;line-height:1.6}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--dark);font-weight:300;overflow-x:hidden;line-height:1.6;-webkit-text-size-adjust:100%}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,244,238,.96);backdrop-filter:blur(16px);border-bottom:.5px solid var(--bdr);height:56px;padding:0 48px;display:flex;align-items:center;justify-content:space-between}
-.nb{font-family:'Playfair Display',serif;font-size:15px;color:var(--warm);letter-spacing:.04em}
-.nl{display:flex;gap:24px;list-style:none}
-.nl a{font-size:12px;letter-spacing:.07em;color:var(--dark);text-decoration:none;opacity:.6;transition:opacity .2s}
+.nb{font-family:'Playfair Display',serif;font-size:15px;color:var(--warm);letter-spacing:.04em;flex:0 1 auto;min-width:0}
+.nl{display:flex;gap:24px;list-style:none;align-items:center}
+.nl li{flex:none}
+.nl a{display:block;font-size:12px;letter-spacing:.07em;color:var(--dark);text-decoration:none;opacity:.6;transition:opacity .2s}
 .nl a:hover{opacity:1;color:var(--warm)}
 
 .hero{padding-top:56px;min-height:100vh;display:grid;grid-template-columns:55% 45%}
@@ -101,6 +102,11 @@ h1 em{font-style:italic;color:var(--warm)}
 .sct strong{color:var(--cream);opacity:1}
 .scr{font-size:11px;margin-top:14px;opacity:.4;border-top:.5px solid rgba(255,255,255,.1);padding-top:12px}
 
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-scroll .ptable{min-width:760px}
+.biz-investments{margin-top:40px;padding:24px 28px;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.08)}
+.biz-invest-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;font-size:12px}
+
 /* room grid */
 .rg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}
 .rc{border:.5px solid var(--bdr);padding:18px}
@@ -157,9 +163,67 @@ h1 em{font-style:italic;color:var(--warm)}
 
 footer{background:var(--dark);color:var(--cream);padding:40px 56px;display:flex;justify-content:space-between;align-items:center;border-top:.5px solid rgba(255,255,255,.06)}
 .fb{font-family:'Playfair Display',serif;font-size:18px;color:var(--acc)}
-.fn{font-size:11px;opacity:.35}
+.fn{font-size:11px;opacity:.35;max-width:460px}
 
-@media(max-width:860px){.hero,.fg{grid-template-columns:1fr}.hi{height:50vw}.g3,.rg,.bmet,.pgrid,.eg2{grid-template-columns:1fr 1fr}.tsplit{grid-template-columns:1fr}nav{padding:0 20px}.S{padding:56px 24px}}
+@media (hover:none){
+  .gcap{opacity:1}
+  .gi:hover img{transform:none}
+}
+
+@media(max-width:860px){
+  html{scroll-padding-top:104px}
+  nav{position:sticky;top:0;height:auto;padding:calc(12px + env(safe-area-inset-top)) 20px 10px;flex-direction:column;align-items:flex-start;gap:10px}
+  .nb{font-size:14px;line-height:1.2;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nl{width:100%;gap:14px;overflow-x:auto;white-space:nowrap;padding-bottom:2px;scrollbar-width:none}
+  .nl::-webkit-scrollbar{display:none}
+  .nl a{font-size:11px;padding:4px 0}
+  .hero,.fg,.tsplit{grid-template-columns:1fr}
+  .hero{padding-top:0;min-height:auto}
+  .hc{padding:36px 20px 28px}
+  .hdesc,.ssub{max-width:none}
+  .kpi{grid-template-columns:repeat(2,1fr);max-width:none}
+  .hi{height:min(62vw,420px)}
+  .hi::after{display:none}
+  .S{padding:48px 20px}
+  .g2{grid-template-columns:1fr}
+  .g3,.rg,.eg2,.scen,.bmet,.pgrid{grid-template-columns:1fr 1fr}
+  .tb{padding:20px 22px}
+  .tbv{font-size:26px}
+  .er{flex-direction:column;align-items:flex-start;gap:4px}
+  .biz-invest-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .biz-investments{padding:20px}
+  footer{padding:28px 20px;flex-direction:column;align-items:flex-start;gap:14px}
+  .fb{font-size:16px;max-width:240px}
+  .fn{max-width:none;line-height:1.6}
+}
+
+@media(max-width:560px){
+  html{scroll-padding-top:112px}
+  nav{padding:calc(10px + env(safe-area-inset-top)) 16px 8px}
+  .nb{font-size:13px}
+  .nl{gap:12px}
+  .nl a{font-size:11px;padding:6px 0}
+  .tag{margin-bottom:14px}
+  h1{font-size:clamp(32px,11vw,46px);margin-bottom:18px}
+  .hdesc{font-size:13px;line-height:1.7;margin-bottom:24px}
+  .hc{padding:28px 16px 24px}
+  .kv{font-size:20px}
+  .kc{padding:14px 12px}
+  .kl{font-size:9px}
+  .S{padding:40px 16px}
+  .stit{font-size:clamp(24px,8vw,34px)}
+  .ssub{font-size:13px;margin-bottom:28px}
+  .hi{height:72vw}
+  .g3,.rg,.eg2,.scen,.bmet,.pgrid,.biz-invest-grid{grid-template-columns:1fr}
+  .fg{gap:24px}
+  .sc{padding:20px 18px}
+  .scv{font-size:26px}
+  .tli{margin-bottom:22px}
+  .tltx{font-size:11px}
+  .biz-investments{padding:18px 16px}
+  .biz-invest-grid{font-size:11px}
+  .table-scroll{margin:0 -4px;padding-bottom:4px}
+}
 </style>
 </head>
 <body>
@@ -382,6 +446,7 @@ footer{background:var(--dark);color:var(--cream);padding:40px 56px;display:flex;
 
   <div style="margin-bottom:48px">
     <div style="font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(248,244,238,.45);padding-bottom:10px;border-bottom:.5px solid rgba(196,144,96,.3);margin-bottom:0">Что выращивать, сколько держать и какой доход</div>
+    <div class="table-scroll">
     <table class="ptable">
       <thead>
         <tr>
@@ -462,6 +527,7 @@ footer{background:var(--dark);color:var(--cream);padding:40px 56px;display:flex;
         </tr>
       </tbody>
     </table>
+    </div>
 
     <div style="margin-top:16px;padding:16px 18px;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.08);font-size:12px;line-height:1.8;opacity:.7">
       <strong style="opacity:1;color:var(--acc)">Про логистику аренды:</strong> небольшие горшки (замиокулькасы, аглаонемы до 5 кг) — вы возите сами на своей машине. Крупные растения (фикус лировидный 15–20 кг) — постоянный водитель по вызову, ~2–3 тыс. ₽ за выезд, 3–4 раза в месяц = ~8–12 тыс. ₽/мес. Уже учтено в расходах.
@@ -541,9 +607,9 @@ footer{background:var(--dark);color:var(--cream);padding:40px 56px;display:flex;
     </div>
   </div>
 
-  <div style="margin-top:40px;padding:24px 28px;background:rgba(255,255,255,.04);border:.5px solid rgba(255,255,255,.08)">
+  <div class="biz-investments">
     <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.4;margin-bottom:16px">Стартовые вложения в бизнес (отдельно от дома)</div>
-    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;font-size:12px">
+    <div class="biz-invest-grid">
       <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--acc);margin-bottom:4px">~150 т₽</div><div style="opacity:.6">Маточные растения для продажи<br>(30–40 редких видов)</div></div>
       <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--acc);margin-bottom:4px">~80 т₽</div><div style="opacity:.6">Горшки, кашпо, грунт, субстрат<br>для первых офисных контрактов</div></div>
       <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--acc);margin-bottom:4px">~30 т₽</div><div style="opacity:.6">Удобрения, инструменты,<br>упаковка для отправки</div></div>
