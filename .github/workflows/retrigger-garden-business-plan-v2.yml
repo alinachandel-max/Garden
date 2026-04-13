@@ -1,0 +1,42 @@
+name: Retrigger Garden Business Plan Update V2
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/retrigger-garden-business-plan-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract patch with Python, apply it, and clean up
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          workflow = Path('.github/workflows/apply-garden-business-plan.yml').read_text(encoding='utf-8')
+          marker = "cat <<'EOF' | base64 -d > /tmp/garden-business-plan.patch\n"
+          start = workflow.index(marker) + len(marker)
+          end = workflow.index("\nEOF\n", start)
+          Path('/tmp/garden-business-plan.patch.b64').write_text(workflow[start:end], encoding='utf-8')
+          PY
+
+          base64 -d /tmp/garden-business-plan.patch.b64 > /tmp/garden-business-plan.patch
+          git apply --index /tmp/garden-business-plan.patch
+
+          rm .github/workflows/apply-garden-business-plan.yml
+          rm .github/workflows/retrigger-garden-business-plan.yml
+          rm .github/workflows/retrigger-garden-business-plan-v2.yml
+
+          git config user.name "alinachandel-max"
+          git config user.email "alinachandel@gmail.com"
+          git add -A
+          git commit -m "Update greenhouse business plan"
+          git push
